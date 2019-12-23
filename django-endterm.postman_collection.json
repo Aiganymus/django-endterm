@@ -1,0 +1,443 @@
+{
+	"info": {
+		"_postman_id": "e75515f7-36e9-4629-8a40-d27d73351b01",
+		"name": "django-endterm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac84f00b-d026-49ee-92ce-558a40ae7372",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin1",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "is_staff",
+									"value": "true",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac84f00b-d026-49ee-92ce-558a40ae7372",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin1\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/aiganym/Downloads/avatar.jpg",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "hello nerds and virgins",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "nowhere",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/profile/1/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"profile",
+								"1",
+								""
+							],
+							"query": [
+								{
+									"key": "avatar",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Core",
+			"item": [
+				{
+					"name": "Article List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/articles/?",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"articles",
+								""
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "JWT {{token}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Article Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "car",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "very cool",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Almaty",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "vehicle",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10000",
+									"type": "text"
+								},
+								{
+									"key": "images_uploaded",
+									"type": "file",
+									"src": [
+										"/home/aiganym/Downloads/Moon.jpg",
+										"/home/aiganym/Downloads/avatar.jpg"
+									]
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/articles/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"articles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Article Detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/articles/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"articles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Article Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/articles/3/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"articles",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Article Edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "JWT {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "car",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "very cool",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Almaty",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "vehicle",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "-1",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10000",
+									"type": "text"
+								},
+								{
+									"key": "images_uploaded",
+									"type": "file",
+									"src": [
+										"/home/aiganym/Downloads/Moon.jpg",
+										"/home/aiganym/Downloads/avatar.jpg"
+									],
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/articles/1/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"articles",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Favorite Article List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Favorite Article",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
