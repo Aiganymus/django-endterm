@@ -24,3 +24,6 @@ class ArticleImage(models.Model):
 class FavoriteArticle(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='favorite_by')
     user = models.ForeignKey(MainUser, on_delete=models.CASCADE, related_name='favorites')
+
+    class Meta:
+        unique_together = ('article', 'user')

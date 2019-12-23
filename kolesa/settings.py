@@ -14,6 +14,8 @@ import os
 import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from utils.helpers import create_log_dir_if_not_exists
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -171,4 +173,48 @@ JWT_AUTH = {
 
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
     'JWT_AUTH_COOKIE': None,
+}
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s -- %(asctime)s -- %(message)s',
+        },
+        'simple': {
+            'format': '%(levelname)s -- %(message)s',
+        }
+    },
+    'handlers': {
+        'article_file_handler': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': create_log_dir_if_not_exists('article'),
+            'maxBytes': 1024*1024*5,
+            'backupCount': 3,
+            'formatter': 'verbose'
+        },
+        'user_file_handler': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': create_log_dir_if_not_exists('user'),
+            'maxBytes': 1024*1024*5,
+            'backupCount': 3,
+            'formatter': 'verbose'
+        },
+        'console_handler': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        }
+    },
+    'loggers': {
+        'article': {
+            'handlers': ['article_file_handler', 'console_handler'],
+            'level': 'INFO',
+        },
+        'user': {
+            'handlers': ['user_file_handler', 'console_handler'],
+            'level': 'INFO',
+        },
+    },
 }

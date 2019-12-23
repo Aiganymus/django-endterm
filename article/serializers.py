@@ -1,7 +1,7 @@
 from django.db import transaction
 from rest_framework import serializers
 
-from article.models import Article, ArticleImage
+from article.models import Article, ArticleImage, FavoriteArticle
 from user.serializers import UserSerializer
 
 
@@ -9,12 +9,6 @@ class ArticleShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = ('name', 'description', 'price', 'city', 'category', 'color')
-
-    def validate_color(self, value):
-        print(value)
-        if 1 > value > 3:
-            raise serializers.ValidationError('color must be 1, 2, 3')
-        return value
 
     def validate_price(self, value):
         if value <= 0:
@@ -47,3 +41,12 @@ class ArticleFullSerializer(ArticleShortSerializer):
             article.save()
             ArticleImage.objects.bulk_create([ArticleImage(article=article, image=img) for img in images])
             return article
+
+
+class FavoriteArticleSerializer(serializers.ModelSerializer):
+    article_id = serializers.IntegerField()
+    user = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = FavoriteArticle
+        fields = ('article_id', 'user')
